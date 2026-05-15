@@ -1,0 +1,33 @@
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           8  0.0  0.0   3396  2576 ?        Sl   14:40   0:02 plan9 --control-socket 7 --log-level 4 --server-fd 8 --pipe-fd 10 --log-truncate
+root           1  0.0  0.1  21760 12080 ?        Ss   14:40   0:00 /sbin/init
+root         105  0.0  0.0  25312  6480 ?        Ss   14:41   0:00 /usr/lib/systemd/systemd-udevd
+root          55  0.0  0.2  66820 16440 ?        S<s  14:41   0:00 /usr/lib/systemd/systemd-journald
+qiuao       1190  0.0  0.0   3160  1584 pts/2    S+   15:42   0:00 tail -f metrics.jsonl
+root         216  0.0  0.1 1755840 12240 ?       Ssl  14:41   0:00 /usr/libexec/wsl-pro-service -vv
+polkitd      868  0.0  0.0 308164  7632 ?        Ssl  14:44   0:00 /usr/lib/polkit-1/polkitd --no-debug
+qiuao        394  0.0  0.0   6204  5040 pts/0    Ss   14:41   0:00 -bash
+systemd+     121  0.0  0.0  91024  7632 ?        Ssl  14:41   0:00 /usr/lib/systemd/systemd-timesyncd
+root         267  0.0  0.2 107024 22176 ?        Ssl  14:41   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+message+     194  0.0  0.0   9660  4608 ?        Ss   14:41   0:00 @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+syslog       240  0.0  0.0 222508  4896 ?        Ssl  14:41   0:00 /usr/sbin/rsyslogd -n -iNONE
+systemd+     120  0.0  0.1  21456 12096 ?        Ss   14:41   0:00 /usr/lib/systemd/systemd-resolved
+qiuao        629  0.0  0.0   6720  5904 pts/2    Ss   14:43   0:00 -bash
+root         210  0.0  0.1  17968  8352 ?        Ss   14:41   0:00 /usr/lib/systemd/systemd-logind
+root         393  0.0  0.0   3096  1008 ?        S    14:41   0:00 /init
+qiuao        441  0.0  0.1  20112 10656 ?        Ss   14:41   0:00 /usr/lib/systemd/systemd --user
+qiuao        458  0.0  0.0   6072  5184 pts/1    S+   14:41   0:00 -bash
+root         193  0.0  0.0   4236  2448 ?        Ss   14:41   0:00 /usr/sbin/cron -f -P
+root           2  0.0  0.0   3072  1584 ?        Sl   14:40   0:00 /init
+root         249  0.0  0.0   3160  2016 hvc0     Ss+  14:41   0:00 /sbin/agetty -o -p -- \u --noclear --keep-baud - 115200,38400,9600 vt220
+root         257  0.0  0.0   3116  1728 tty1     Ss+  14:41   0:00 /sbin/agetty -o -p -- \u --noclear - linux
+root         392  0.0  0.0   3080   864 ?        Ss   14:41   0:00 /init
+root         395  0.0  0.0   6820  4320 pts/1    Ss   14:41   0:00 /bin/login -f
+qiuao        442  0.0  0.0  21144  3448 ?        S    14:41   0:00 (sd-pam)
+root         624  0.0  0.0   3088   864 ?        Ss   14:43   0:00 /init
+root         626  0.0  0.0   3088   864 ?        S    14:43   0:00 /init
+qiuao       1222  0.0  0.0   6404  3744 pts/0    S+   15:45   0:00 ./sysmon
+qiuao       1325  0.0  0.0   2804  1584 pts/0    S+   15:45   0:00 sh -c -- scripts/snapshot.sh snapshots/2025-12-19T15-45-35.738+09-00_mem_high
+qiuao       1326  0.0  0.0   4756  3168 pts/0    S+   15:45   0:00 bash scripts/snapshot.sh snapshots/2025-12-19T15-45-35.738+09-00_mem_high
+qiuao       1334  0.0  0.0   8284  4176 pts/0    R+   15:45   0:00 ps aux --sort=-%cpu
+qiuao       1335  0.0  0.0   3140  1584 pts/0    S+   15:45   0:00 head -n 50

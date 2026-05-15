@@ -1,0 +1,38 @@
+top - 15:45:14 up  1:04,  1 user,  load average: 0.00, 0.00, 0.00
+Tasks:  31 total,   1 running,  30 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0.0 us,  0.9 sy,  0.0 ni, 99.1 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st 
+MiB Mem :   7695.7 total,   7109.2 free,    532.4 used,    208.3 buff/cache     
+MiB Swap:   2048.0 total,   2048.0 free,      0.0 used.   7163.3 avail Mem 
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+      1 root      20   0   21760  12080   9200 S   0.0   0.2   0:00.49 systemd
+      2 root      20   0    3072   1584   1584 S   0.0   0.0   0:00.00 init-sy+
+      8 root      20   0    3396   2576   1872 S   0.0   0.0   0:02.93 init
+     55 root      19  -1   66820  16440  15576 S   0.0   0.2   0:00.21 systemd+
+    105 root      20   0   25312   6480   4896 S   0.0   0.1   0:00.22 systemd+
+    120 systemd+  20   0   21456  12096  10080 S   0.0   0.2   0:00.08 systemd+
+    121 systemd+  20   0   91024   7632   6768 S   0.0   0.1   0:00.13 systemd+
+    193 root      20   0    4236   2448   2304 S   0.0   0.0   0:00.01 cron
+    194 message+  20   0    9660   4608   4176 S   0.0   0.1   0:00.09 dbus-da+
+    210 root      20   0   17968   8352   7488 S   0.0   0.1   0:00.07 systemd+
+    216 root      20   0 1755840  12240  10080 S   0.0   0.2   0:00.18 wsl-pro+
+    240 syslog    20   0  222508   4896   4176 S   0.0   0.1   0:00.08 rsyslogd
+    249 root      20   0    3160   2016   1872 S   0.0   0.0   0:00.00 agetty
+    257 root      20   0    3116   1728   1728 S   0.0   0.0   0:00.00 agetty
+    267 root      20   0  107024  22176  12960 S   0.0   0.3   0:00.10 unatten+
+    392 root      20   0    3080    864    864 S   0.0   0.0   0:00.00 Session+
+    393 root      20   0    3096   1008   1008 S   0.0   0.0   0:00.06 Relay(3+
+    394 qiuao     20   0    6204   5040   3456 S   0.0   0.1   0:00.14 bash
+    395 root      20   0    6820   4320   3744 S   0.0   0.1   0:00.00 login
+    441 qiuao     20   0   20112  10656   8928 S   0.0   0.1   0:00.05 systemd
+    442 qiuao     20   0   21144   3448   1728 S   0.0   0.0   0:00.00 (sd-pam)
+    458 qiuao     20   0    6072   5184   3600 S   0.0   0.1   0:00.02 bash
+    624 root      20   0    3088    864    864 S   0.0   0.0   0:00.00 Session+
+    626 root      20   0    3088    864    864 S   0.0   0.0   0:00.00 Relay(6+
+    629 qiuao     20   0    6720   5904   3600 S   0.0   0.1   0:00.07 bash
+    868 polkitd   20   0  308164   7632   6912 S   0.0   0.1   0:00.15 polkitd
+   1190 qiuao     20   0    3160   1584   1584 S   0.0   0.0   0:00.01 tail
+   1222 qiuao     20   0    6404   3744   3600 S   0.0   0.0   0:00.00 sysmon
+   1223 qiuao     20   0    2804   1584   1584 S   0.0   0.0   0:00.00 sh
+   1224 qiuao     20   0    4756   3168   3024 S   0.0   0.0   0:00.01 bash
+   1231 qiuao     20   0    9288   5040   3024 R   0.0   0.1   0:00.01 top
