@@ -3,16 +3,18 @@
 #include "sysmon_service.h"
 #include "cpu_collector.h"
 #include "mem_collector.h"
+#include "config.h"
 
 int main() {
-    // Ã¿ 2 Ãë²ÉÑùÒ»´Î
-    SysmonService service(2.0);
+    // æ¯ 2 ç§’é‡‡æ ·ä¸€æ¬¡
+    SysmonConfig config = loadConfig("sysmon.conf");
+    SysmonService service(config);
 
-    // ×¢²á CPU / ÄÚ´æ²É¼¯Æ÷
+    // æ³¨å†Œ CPU / å†…å­˜é‡‡é›†å™¨
     service.addCollector(std::make_unique<CpuCollector>());
     service.addCollector(std::make_unique<MemCollector>());
 
-    // ½øÈëÖ÷Ñ­»·
+    // è¿›å…¥ä¸»å¾ªç¯
     service.run();
     return 0;
 }

@@ -4,7 +4,7 @@
 #include <fstream>
 #include <vector>
 
-#include "metric_sample.h"   // ? ¸´ÓÃ¹¤³ÌÄÚÒÑÓĞ MetricSample
+#include "metric_sample.h"   // ? å¤ç”¨å·¥ç¨‹å†…å·²æœ‰ MetricSample
 
 class Logger {
 public:
@@ -13,7 +13,7 @@ public:
     void info(const std::string& msg);
     void warn(const std::string& msg);
 
-    // ===== ½×¶Î2ĞÂÔö =====
+    // ===== é˜¶æ®µ2æ–°å¢ =====
     std::string nowIso8601Local() const;
 
     void metricsJsonl(const std::string& ts,
