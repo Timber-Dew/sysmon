@@ -26,6 +26,13 @@ void SysmonService::run() {
     const auto interval = duration_cast<SteadyClock::duration>(duration<double>(config_.interval_sec));
     next_tick_ = SteadyClock::now() + interval;
 
+    SteadyClock::time_point last_cpu_alarm_time_;
+    bool has_cpu_alarm_time_ = false;
+
+    //定义冷静时间
+    auto now = SteadyClock::now();
+    bool cooldown_passed = !has_cpu_alarm_time_ || duration_cast<seconds>(now - last_cpu_alarm_time_).count() >= config_.alert_cooldown_sec;
+
     while (true) {
         // 阶段2：统一时间戳（本轮 metrics / alarm / snapshot 复用）
         const std::string ts = logger_.nowIso8601Local();
@@ -51,12 +58,14 @@ void SysmonService::run() {
 
         // === 阈值告警逻辑（阶段2：告警 JSONL + 现场快照） ===
         for (const auto& s : samples) {
-            if (s.name == "cpu.usage" && s.value > config_.cpu_threshold) {
+            if (s.name == "cpu.usage" ) {
                 if(s.value > config_.cpu_threshold){
                     cpu_high_count_++;//连续超标，计数器+1
 
-                    if (cpu_high_count_>=3)
+                    if (cpu_high_count_>=config_.alert_consecutive_count && cooldown_passed)
                     {
+                        last_cpu_alarm_time_ = now;
+                        has_cpu_alarm_time_ = true;
                         std::ostringstream w;
                         w << "CPU usage high: "
                             << std::fixed << std::setprecision(1)
@@ -77,7 +86,10 @@ void SysmonService::run() {
                         // 告警事件写入 JSONL（便于检索/统计/关联快照）
                         logger_.alarmJsonl(ts, s.name, s.value, config_.cpu_threshold, snapshot_dir);/* code */
                     }
-                    
+                    else
+                    {
+                        cpu_high_count_=0;//未超标，计数器清零
+                    }
                     
                  }
             }

@@ -36,8 +36,11 @@ SysmonConfig loadConfig(const std::string& path) {
             config.cpu_threshold = std::stod(value);
         } else if (key == "mem_threshold") {
             config.mem_threshold = std::stod(value);
+        } else if (key == "alert_consecutive_count") {
+            config.alert_consecutive_count = std::stod(value);
+        } else if (key == "alert_cooldown_sec") {
+            config.alert_cooldown_sec = std::stod(value);
         }
-        
     }
 
     return config;
