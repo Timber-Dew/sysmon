@@ -8,7 +8,8 @@ SRCS = main.cpp \
        cpu_collector.cpp \
        mem_collector.cpp \
        logger.cpp\
-       config.cpp
+       config.cpp\
+       alert_manager.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

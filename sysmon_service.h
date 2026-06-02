@@ -6,6 +6,7 @@
 #include "logger.h"
 #include "metric_collector.h"
 #include "config.h"
+#include "alert_manager.h"
 
 // 核心服务：调度所有采集器，并统一打印指标
 class SysmonService {
@@ -25,6 +26,7 @@ private:
 
 private:
     SysmonConfig config_;
+    AlertManager alert_manager_;
     Logger logger_;
     std::vector<std::unique_ptr<IMetricCollector>> collectors_;
 

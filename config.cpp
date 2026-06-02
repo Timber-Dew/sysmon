@@ -41,6 +41,7 @@ SysmonConfig loadConfig(const std::string& path) {
         } else if (key == "alert_cooldown_sec") {
             config.alert_cooldown_sec = std::stod(value);
         }
+        
     }
 
     return config;
