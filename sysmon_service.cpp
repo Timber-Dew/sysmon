@@ -54,73 +54,29 @@ void SysmonService::run() {
 
         // === 阈值告警逻辑（阶段2：告警 JSONL + 现场快照） ===
         for (const auto& s : samples) {
-            /*if (s.name == "cpu.usage" ) {
-                if(s.value > config_.cpu_threshold){
-                    cpu_high_count_++;//连续超标，计数器+1
-                }else{
-                    cpu_high_count_=0;//未超标，计数器清零
-                }
-
-                //定义冷静时间
-                auto now = SteadyClock::now();
-                bool cooldown_passed = !has_cpu_alarm_time_ || duration_cast<seconds>(now - last_cpu_alarm_time_).count() >= config_.alert_cooldown_sec;
-                if (cpu_high_count_>=config_.alert_consecutive_count && cooldown_passed)
-                {
-                    last_cpu_alarm_time_ = now;
-                    has_cpu_alarm_time_ = true;
-                    std::ostringstream w;
-                    w << "CPU usage high: "
-                        << std::fixed << std::setprecision(1)
-                        << s.value << s.unit
-                        << " (threshold=" << config_.cpu_threshold << "%)";
-                    logger_.warn(w.str());*/
-
-                    AlertDecision decision_ = alert_manager_.check(s);
-                    if (decision_.should_alert){
-                        std::ostringstream w;
-                        w << "CPU usage high: "
-                            << std::fixed << std::setprecision(1)
-                            << s.value << s.unit
-                            << " (threshold=" << decision_.threshold << "%)";
-                        logger_.warn(w.str());
-                    
-
-                        if (!snapshot_taken) {
-                            snapshot_dir = makeSafeDir("snapshots/" + ts + "_cpu_high");
-                            std::string cmd = "scripts/snapshot.sh " + snapshot_dir;
-                            int rc=std::system(cmd.c_str());
-                            if(rc!=0){
-                                logger_.warn("snapshot command failed " + cmd);
-                            }
-                            snapshot_taken = true;
-                        }
-
-                        // 告警事件写入 JSONL（便于检索/统计/关联快照）
-                        logger_.alarmJsonl(ts, s.name, s.value, config_.cpu_threshold, snapshot_dir);/* code */
-                    }
-                //}
-
-            //}
-
-            if (s.name == "mem.usage" && s.value > config_.mem_threshold) {
+            AlertDecision decision_ = alert_manager_.check(s);
+            if (decision_.should_alert){
                 std::ostringstream w;
-                w << "Memory usage high: "
+                w << "high: "
                     << std::fixed << std::setprecision(1)
                     << s.value << s.unit
-                    << " (threshold=" << config_.mem_threshold << "%)";
+                    << " (threshold=" << decision_.threshold << "%)";
                 logger_.warn(w.str());
+            
 
                 if (!snapshot_taken) {
-                    snapshot_dir = makeSafeDir("snapshots/" + ts + "_mem_high");
+                    std::string reason = s.name == "cpu.usage" ? "cpu_high" : "mem_high";
+                    snapshot_dir = makeSafeDir("snapshots/" + ts + "_" + reason);
                     std::string cmd = "scripts/snapshot.sh " + snapshot_dir;
-                    int rc = std::system(cmd.c_str());
-                    if (rc != 0) {
+                    int rc=std::system(cmd.c_str());
+                    if(rc!=0){
                         logger_.warn("snapshot command failed " + cmd);
                     }
                     snapshot_taken = true;
                 }
 
-                logger_.alarmJsonl(ts, s.name, s.value, config_.mem_threshold, snapshot_dir);
+                // 告警事件写入 JSONL（便于检索/统计/关联快照）
+                logger_.alarmJsonl(ts, s.name, s.value, decision_.threshold, snapshot_dir);/* code */
             }
         }
 

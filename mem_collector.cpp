@@ -11,7 +11,7 @@ void MemCollector::collect(std::vector<MetricSample>& out) {
         return;
     }
 
-    std::map<std::string, unsigned long long> meminfo;
+    std::map <std::string, unsigned long long> meminfo;
     std::string line;
     while (std::getline(fin, line)) {
         std::istringstream iss(line);

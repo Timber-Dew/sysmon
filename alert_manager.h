@@ -22,4 +22,8 @@ private:
     int cpu_high_count_ = 0;
     SteadyClock::time_point last_cpu_alarm_time_{};
     bool has_cpu_alarm_time_ = false;
+
+    int mem_high_count_ = 0;
+    SteadyClock::time_point last_mem_alarm_time_{};
+    bool has_mem_alarm_time_ = false;
 };

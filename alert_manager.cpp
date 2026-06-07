@@ -26,5 +26,24 @@ AlertDecision AlertManager::check(const MetricSample& sample) {
         }
     }
 
+    if (sample.name == "mem.usage") {
+        if (sample.value > config_.mem_threshold) {
+            mem_high_count_++;
+        } else {
+            mem_high_count_ = 0;
+        }
+        auto now = SteadyClock::now();
+        bool cooldown_passed = !has_mem_alarm_time_ || std::chrono::duration_cast<std::chrono::seconds>(now - last_mem_alarm_time_).count() >= config_.alert_cooldown_sec;
+
+        if (mem_high_count_ >= config_.alert_consecutive_count && cooldown_passed) {
+            decision.should_alert = true;
+            decision.threshold = config_.mem_threshold;
+            last_mem_alarm_time_ = now;
+            has_mem_alarm_time_ = true;
+        }
+    }
+
     return decision;
+
+
 }

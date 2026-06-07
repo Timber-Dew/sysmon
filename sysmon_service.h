@@ -34,5 +34,4 @@ private:
     SteadyClock::time_point next_tick_{};
     double loop_cost_ms_{ 0.0 };
     
-    int cpu_high_count_ = 0;
 };
