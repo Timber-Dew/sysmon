@@ -102,7 +102,7 @@ void SysmonService::run() {
                     << " (threshold=" << decision_.threshold << "%)";
                 logger_.warn(w.str());
             
-
+                
                 if (!snapshot_taken) {
                     std::string reason = s.name == "cpu.usage" ? "cpu_high" : "mem_high";
                     snapshot_dir = makeSafeDir("snapshots/" + ts + "_" + reason);
