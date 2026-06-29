@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <sstream>
 #include <thread>
+#include <iostream>
 
 // 阈值（百分比）
 SysmonService::SysmonService(const SysmonConfig& config)
@@ -38,7 +39,45 @@ void SysmonService::run() {
 
         // 让所有采集器填充本轮 samples
         for (auto& c : collectors_) {
-            c->collect(samples);
+            auto start = SteadyClock::now();
+            bool ok = true;
+            long long cost_us = 0.0;
+            try
+            {          
+                c->collect(samples);
+                auto end = SteadyClock::now();
+                cost_us = duration<double, std::micro>(end - start).count();
+            }
+            catch(const std::ios_base::failure& e)
+            {
+                ok = false;
+                std::cerr << "[Collector Error] " << c->name() << " failed: " << e.what() << std::endl;
+            }
+            catch(const std::invalid_argument& e)
+            {
+                ok = false;
+                std::cerr << "[Collector Error] " << c->name() << " invalid data: " << e.what() << std::endl;
+            }
+            catch(const std::out_of_range& e)
+            {
+                ok = false;
+                std::cerr << "[Collector Error] " << c->name() << " out of range: " << e.what() << std::endl;
+            }
+             catch(const std::exception& e)
+            {
+                ok = false;
+                std::cerr << "[Collector Error] " << c->name() << " unknown error" << std::endl;
+            }
+            catch(...)
+            {
+                ok = false; 
+                std::cerr << "[Collector Error] " << c->name() << " unknown non-exception error" << std::endl;
+            }
+
+            samples.push_back(MetricSample{std::string("collector.") + c->name() + ".ok" , ok ? 1.0 : 0.0 , " "});
+
+            samples.push_back(MetricSample{std::string("collector.") + c->name() + ".cost_us" , static_cast<double>(cost_us) , "us"});
+            
         }
 
         // 阶段2：同一轮只生成一次快照，避免 cpu+mem 同时超阈值重复落盘
