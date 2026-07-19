@@ -1,21 +1,34 @@
 #pragma once
+
 #include <string>
 
-struct SnapshotDecision {
-    std::string cmd = "";
+struct SnapshotRequest {
+    std::string metric_name;
+    std::string timestamp;
+};
+
+struct SnapshotResult {
+    bool ok{false};
+
+    int return_code{-1};
+    double cost_ms{0.0};
+
+    std::string reason;
+    std::string snapshot_dir;
+    std::string command;
+    std::string error_message;
 };
 
 class SnapshotManager {
 public:
-    explicit SnapshotManager(std::string s , std::string ts) ;
-    
-    auto makeSafeDir(const std::string& base) -> std::string ;
+    SnapshotManager() = default;
 
-    SnapshotDecision check() ;
+    SnapshotResult take(const SnapshotRequest& request) const;
 
 private:
-    std::string s_;
-    std::string ts_;
-    std::string snapshot_dir;
+    std::string resolveReason(const std::string& metric_name) const;
 
+    std::string makeSafeDir(const std::string& base) const;
+
+    std::string buildCommand(const std::string& snapshot_dir) const;
 };

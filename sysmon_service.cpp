@@ -1,6 +1,7 @@
 #include "sysmon_service.h"
 #include "config.h"
 #include "alert_manager.h"
+#include "SnapshotManager.h"
 
 #include <algorithm>
 #include <chrono>

@@ -27,6 +27,7 @@ private:
 private:
     SysmonConfig config_;
     AlertManager alert_manager_;
+    SnapshotManager snapshot_manager_;
     Logger logger_;
     std::vector<std::unique_ptr<IMetricCollector>> collectors_;
 
